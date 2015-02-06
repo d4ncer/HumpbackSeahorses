@@ -1,6 +1,7 @@
 //initialize
 var socket = io();
 var vent = _.extend({}, Backbone.Events);
+var styleTool = function(){};
 
 $(function(){
   //display users language functionality
@@ -30,17 +31,36 @@ $(function(){
   });
 
   //define injectable/removable styles for user message ignoring and highlighting
-  var styleTool = function(id, action, val) {
+  styleTool = function($element, action) {
     var rule = "";
-    if(action === "ignoreON"){
-      rule = '.message-display[data-user_id="' + id + '"] { display: none; }';
-      rule = rule + '[data-user_id="' + id + '"] { color: grey; }';
-    }else if(action === "highlightON"){
-      //TODO: rule for highlighting users
-    }else if(action === "ignoreOFF" || action === "highlightOFF"){
-      $('style[data-user_id="' + id + '"]').remove();
-      return;
+    var id = $element.data("user_id");
+    var ignore = $element.data("ignore");
+    var highlight = $element.data("highlight");
+
+    if(action === 'toggleHighlight'){
+      if(!highlight || highlight === "OFF"){
+        rule = '.message-display[data-user_id="' + id + '"] { color: orange; }';
+        rule = rule + '[data-user_id="' + id + '"] { color: orange; }';
+        $("[data-user_id='" + id + "']").data("highlight", "ON");
+      }else{
+        $('style[data-user_id="' + id + '"]').remove();
+        $("[data-user_id='" + id + "']").data("highlight", "OFF");
+        return;
+      }
     }
+
+    if(action === 'toggleIgnore'){
+      if(!ignore || ignore === "OFF"){
+        rule = '.message-display[data-user_id="' + id + '"] { display: none; }';
+        rule = rule + '[data-user_id="' + id + '"] { color: dimgray; }';
+        $("[data-user_id='" + id + "']").data("ignore", "ON");
+      }else{
+        $('style[data-user_id="' + id + '"]').remove();
+        $("[data-user_id='" + id + "']").data("ignore", "OFF");
+        return;
+      }
+    };
+
     var div = $("<div />", {html: '&shy;<style data-user_id="' + id + '">' + rule + '</style>'})
               .appendTo("body");
   };
