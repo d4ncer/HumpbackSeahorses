@@ -14,7 +14,7 @@ var SubmitView = Backbone.View.extend({
         //TODO: modify specified user's typing status as found in data
         var $username = $("li[data-user_id = '" + data.user_id + "']").find(".typingIndicator");
         if(data.status){
-          $username.html("...");
+          $username.html(' <i class="fa fa-spinner fa-spin"></i>');
         }else{
           $username.empty();
         }
