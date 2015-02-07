@@ -19,8 +19,9 @@ var UsersInRoomView = Backbone.View.extend({
       var user_id = nameIdPair.slice(index+1);
       var data = 'data-user_id="' + user_id + '"';
       var action = 'onclick="styleTool($(this), \'toggleHighlight\'  )"';
+      var drag = 'draggable="true" ondragstart="drag(event)"';
       var typing = '<span class="typingIndicator"></span>'
-      this.$el.append('<li style="list-style: none"' + action + data + '>' + username + typing + '</li>');
+      this.$el.append('<li style="list-style: none"' + drag + action + data + '>' + username + typing + '</li>');
     }, this)
 
   }

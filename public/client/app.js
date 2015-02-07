@@ -66,3 +66,18 @@ $(function(){
   };
 
 });
+
+//drag and drop functions for ignore
+var allowDrop = function(ev) {
+  ev.preventDefault();
+}
+
+var drag = function(ev) {
+  ev.dataTransfer.setData("object", ev.target["data-user_id"]);
+};
+
+var drop = function(ev) {
+  ev.preventDefault();
+  var data = ev.dataTransfer.getData("object");
+  console.log(data);
+}
